@@ -9,14 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-base: #0c0e12;
-      --bg-surface: rgba(22, 27, 34, 0.75);
-      --border-soft: rgba(255, 255, 255, 0.1);
-      --border-glow: rgba(200, 210, 225, 0.25);
-      --text-main: #e2e8f0;
+      --bg-base: #0f1217;
+      --bg-surface: #1a1f26;
+      --border-card: rgba(255, 255, 255, 0.12);
+      --border-glow: rgba(200, 215, 230, 0.28);
+      --text-main: #f1f5f9;
       --text-muted: #94a3b8;
       --silver: #cbd5e1;
-      --chimuelo-green: #38ef7d;
+      --chimuelo-green: #34d399;
     }
 
     * {
@@ -33,14 +33,14 @@
       line-height: 1.6;
     }
 
-    /* Atmósfera de niebla y cielo nórdico */
+    /* Brillo de luna en el fondo */
     .sky-glow {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: radial-gradient(circle at 50% 20%, #1e2530 0%, #0c0e12 75%);
+      background: radial-gradient(circle at 50% 15%, #242c38 0%, #0f1217 75%);
       z-index: -1;
       pointer-events: none;
     }
@@ -51,15 +51,15 @@
       padding: 40px 20px 100px;
     }
 
-    /* Portada / Hero */
+    /* Hero / Portada */
     .hero {
-      min-height: 90vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 20px 10px;
+      padding: 30px 10px;
     }
 
     .tag {
@@ -67,18 +67,18 @@
       text-transform: uppercase;
       letter-spacing: 3px;
       color: var(--text-muted);
-      border: 1px solid var(--border-soft);
-      padding: 5px 14px;
+      border: 1px solid var(--border-card);
+      padding: 6px 16px;
       border-radius: 30px;
-      background: rgba(255, 255, 255, 0.03);
-      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      margin-bottom: 22px;
     }
 
     h1 {
       font-family: 'Cinzel', serif;
-      font-size: clamp(2.1rem, 6vw, 3.2rem);
+      font-size: clamp(2.2rem, 6vw, 3.2rem);
       letter-spacing: 2px;
-      color: #f8fafc;
+      color: #ffffff;
       margin-bottom: 12px;
       line-height: 1.2;
     }
@@ -93,12 +93,13 @@
       margin-top: 35px;
       padding: 20px;
       border-left: 2px solid var(--border-glow);
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 0 12px 12px 0;
       text-align: left;
       font-style: italic;
       color: var(--silver);
       font-size: 0.95rem;
+      max-width: 520px;
     }
 
     .quote-author {
@@ -111,28 +112,226 @@
     }
 
     .scroll-hint {
-      margin-top: 45px;
+      margin-top: 50px;
       font-size: 0.75rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text-muted);
-      animation: pulse 2.2s infinite;
+      animation: bounce 2.2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; transform: translateY(0); }
-      50% { opacity: 1; transform: translateY(6px); }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(8px); opacity: 1; }
     }
 
-    /* Tarjetas de fotos con efecto Scroll Reveal */
+    /* Tarjetas de fotos */
     .timeline-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-soft);
-      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-card);
       border-radius: 18px;
       padding: 20px;
-      margin-bottom: 80px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
-      opacity: 0;
-      transform: translateY(60px);
-      transition: all 0
+      margin-bottom: 70px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      /* Inician visibles para evitar fallos si el navegador no soporta JS */
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .image-box {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111418;
+    }
+
+    .image-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      max-height: 520px;
+      transition: transform 0.4s ease;
+    }
+
+    .timeline-card:hover .image-box img {
+      transform: scale(1.02);
+    }
+
+    .card-info {
+      padding: 20px 4px 6px;
+    }
+
+    .step-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--chimuelo-green);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .card-text {
+      color: var(--silver);
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* Mensaje final */
+    .closing-section {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(15, 18, 23, 0.95) 100%);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      padding: 40px 24px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .closing-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      color: #fff;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sky-glow"></div>
+
+  <div class="container">
+    
+    <header class="hero">
+      <span class="tag">Primer Mes • Nuestra Bitácora</span>
+      <h1>Noches Blancas</h1>
+      <p class="sub-hero">Para mi Astrid valiente y mi tierna Chimuela</p>
+      
+      <div class="dostoievski-quote">
+        "¡Dios mío! ¡Un minuto entero de bienaventuranza! ¿Acaso es poco para toda una vida humana?"
+        <span class="quote-author">— Fiódor Dostoievski, Noches Blancas</span>
+      </div>
+
+      <div class="scroll-hint">
+        ↓ Desliza para revivir nuestro vuelo ↓
+      </div>
+    </header>
+
+    <!-- Foto 1 -->
+    <article class="timeline-card">
+      <div class="image-box">
+        <img src="1.jpg" alt="Donde comenzó el vuelo">
+      </div>
+      <div class="card-info">
+        <span class="step-label">Vuelo I • El Comienzo</span>
+        <h2 class="card-title">Donde Comenzó el Vuelo</h2>
+        <p class="card-text">Ese instante en el que dos miradas bastaron para cambiarlo todo. Justo como cuando Hipo extendió la mano y encontró en Chimuelo a su mejor aliada.</p>
+      </div>
+    </article>
+
+    <!-- Foto 2 -->
+    <article class="timeline-card">
+      <div class="image-box">
+        <img src="2.jpg" alt="Risas y locura">
+      </div>
+      <div class="card-info">
+        <span class="step-label">Vuelo II • Nuestra Chispa</span>
+        <h2 class="card-title">Muecas, Sonrisas y Paz</h2>
+        <p class="card-text">Nuestra complicidad sin poses ni filtros. Tu risa y esa energía que tienes es lo que llena de color hasta los días más grises.</p>
+      </div>
+    </article>
+
+    <!-- Foto 3 (Apunta a 3.jpeg tal como la subiste a GitHub) -->
+    <article class="timeline-card">
+      <div class="image-box">
+        <img src="3.jpeg" alt="Flojera compartida">
+      </div>
+      <div class="card-info">
+        <span class="step-label">Vuelo III • La Calma</span>
+        <h2 class="card-title">En Cualquier Rincón, Juntos</h2>
+        <p class="card-text">Los momentos sin prisa, acostados compartiendo miradas y tonterías. Contigo aprendí que el mejor lugar del mundo no es un sitio, es tu lado.</p>
+      </div>
+    </article>
+
+    <!-- Foto 4 -->
+    <article class="timeline-card">
+      <div class="image-box">
+        <img src="4.jpg" alt="Noche elegante">
+      </div>
+      <div class="card-info">
+        <span class="step-label">Vuelo IV • Elegancia Pura</span>
+        <h2 class="card-title">La Belleza de Mi Guerrera</h2>
+        <p class="card-text">Esa noche que te vi vestida de gala me recordaste con total certeza a Astrid: radiante, dueña del lugar y con una elegancia que desarma a cualquiera.</p>
+      </div>
+    </article>
+
+    <!-- Foto 5 -->
+    <article class="timeline-card">
+      <div class="image-box">
+        <img src="5.jpg" alt="Nuestras salidas">
+      </div>
+      <div class="card-info">
+        <span class="step-label">Vuelo V • Compañeros de Rutas</span>
+        <h2 class="card-title">Nuestros Reflejos Favoritos</h2>
+        <p class="card-text">Los paseos sencillos, arreglarnos para salir y robar un instante frente al espejo. Cada salida contigo se siente como descubrir un Berk nuevo.</p>
+      </div>
+    </article>
+
+    <!-- Foto 6 -->
+    <article class="timeline-card">
+      <div class="image-box">
+        <img src="6.jpg" alt="En el agua entre montañas">
+      </div>
+      <div class="card-info">
+        <span class="step-label">Vuelo VI • Entre Nubes y Montañas</span>
+        <h2 class="card-title">Tocando el Cielo Juntos</h2>
+        <p class="card-text">Rodeados de verdes montañas y agua infinita. Esa sensación exacta de cuando Hipo y Furia Nocturna atraviesan las nubes: absoluta calma y libertad en tu abrazo.</p>
+      </div>
+    </article>
+
+    <!-- Foto 7 -->
+    <article class="timeline-card">
+      <div class="image-box">
+        <img src="7.jpg" alt="Disfraz de marionetas">
+      </div>
+      <div class="card-info">
+        <span class="step-label">Vuelo VII • El Mejor Dúo</span>
+        <h2 class="card-title">Siempre en Sintonía</h2>
+        <p class="card-text">Nuestra creatividad compartida. No importa la locura o el disfraz: nadie hace un equipo tan auténtico, divertido e inseparable como nosotros dos.</p>
+      </div>
+    </article>
+
+    <!-- Cierre -->
+    <section class="closing-section">
+      <span class="step-label">Primer Mes de Nuestra Historia</span>
+      <h2 class="closing-title">Feliz 1er Mes, Mi Chimuela</h2>
+      <p class="card-text" style="max-width: 540px; margin: 12px auto 0;">
+        En <em>Noches Blancas</em>, la bienaventuranza duró apenas un instante en un puente. Para nosotros, cada minuto es real, fuerte y sigue creciendo. Gracias por ser mi guerrera, mi refugio y mi mejor copiloto.
+      </p>
+    </section>
+
+  </div>
+
+  <script>
+    // Efecto sutil al scrollear
+    const cards = document.querySelectorAll('.timeline-card, .closing-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.transform = 'translateY(0) scale(1)';
+        }
+      });
+    }, { threshold: 0.15 });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>
